@@ -1,10 +1,9 @@
 import React from 'react';
-"use client";
 
 const page = () => {
     return (
         <div>
-            This is Social Media pages
+            demo
         </div>
     );
 };
