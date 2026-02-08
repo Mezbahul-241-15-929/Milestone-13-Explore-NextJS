@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import React from "react";
 
 const Page = async () => {
@@ -10,8 +11,12 @@ const Page = async () => {
   // ✅ API returns { data: [...] }
   const students = Array.isArray(result?.data) ? result.data : [];
 
+  // if(students.length>3){
+  //   redirect("/")
+  // }
+
   return (
-    <ul>
+    <ul className="text-center mt-10">
       {students.map((singleStudent) => (
         <li key={singleStudent._id}>
           {/* ✅ Some docs have `name`, some have `productName` */}
