@@ -1,3 +1,4 @@
+import dbConnect from "@/lib/dbConnect";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -8,7 +9,13 @@ const Page = async () => {
   //   cache: "force-cache", // or "no-store"
   // });
 
-  const res = await fetch("http://localhost:3000/api/items");
+  // const {NEXT_PUBLIC_SERVER_ADDRESS} =process.env;
+  // const res = await fetch(`${NEXT_PUBLIC_SERVER_ADDRESS}/api/items`);
+  const res = await fetch("https://students-gules-nu.vercel.app/api/items");
+
+  // const result = await dbConnect("students").find({}).toArray();
+
+  
 
   const result = await res.json();
 

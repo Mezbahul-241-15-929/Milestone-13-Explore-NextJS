@@ -18,7 +18,10 @@ const ProductAdd = () => {
 
     const payload = { name };
 
-    const res = await fetch("http://localhost:3000/api/items", {
+      // const {NEXT_PUBLIC_SERVER_ADDRESS} =process.env;
+  // const res = await fetch(`${NEXT_PUBLIC_SERVER_ADDRESS}/api/items`);
+
+    const res = await fetch("https://students-gules-nu.vercel.app/api/items", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
