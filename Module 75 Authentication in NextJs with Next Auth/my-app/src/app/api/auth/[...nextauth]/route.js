@@ -1,3 +1,4 @@
+import dbConnect from "@/lib/dbConnect";
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 
@@ -30,10 +31,13 @@ export const authOptions={
     //   })
     //   const user = await res.json()
 
-    console.log("Createntials",credentials)
-    const user ={id:"1",name:"jamh",emali: "abc@gmail.com"}
+    // console.log("Createntials",credentials)
 
-    if(user){
+    const {username,password}=credentials;
+    const user = await dbConnect("students").findOne({username});
+    const isPasswordOK = password== user.password;
+
+    if(isPasswordOK){
         return user
     }
 
@@ -49,7 +53,23 @@ export const authOptions={
     //   return null
     }
   })
-]
+],
+callbacks: {
+  async session({ session, token, user }) {
+    if(token){
+      session.user.username=token.username;
+      session.user.role= token.role;
+    }
+    return session
+  },
+  async jwt({ token, user, account, profile, isNewUser }) {
+    if(user){
+      token.username=user.username;
+      token.role=user.role;
+    }
+    return token
+  }
+}
 }
 
 const handler = NextAuth(authOptions)

@@ -23,6 +23,13 @@ const Navbar = () => {
           </Link> */}
           <LoginButton/>
         </li>
+
+        <li>
+          <Link href="/register" style={{ color: "white", textDecoration: "none" }}>
+            Register
+          </Link>
+        </li>
+        
       </ul>
     </nav>
   );
