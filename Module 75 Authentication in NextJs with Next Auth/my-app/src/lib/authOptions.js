@@ -1,10 +1,13 @@
-import dbConnect from "@/lib/dbConnect";
+import dbConnect, { collectionNames } from "@/lib/dbConnect";
 import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
+
 
 
 export const authOptions={
-  providers: [
+
+providers: [
   CredentialsProvider({
     // The name to display on the sign in form (e.g. 'Sign in with...')
     name: 'Credentials',
@@ -53,15 +56,42 @@ export const authOptions={
     //   // Return null if user data could not be retrieved
     //   return null
     }
-  })
-],
-providers: [
+  }),
   GoogleProvider({
     clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET
+  }),
+    GitHubProvider({
+    clientId: process.env.GITHUB_ID,
+    clientSecret: process.env.GITHUB_SECRET
   })
 ],
 callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      if(account){
+        // console.log("from sigin callback",{user,account,profile,email,credentials})
+        try{
+          const {providerAccountId,provider} =account;
+          const {email: user_email,image,name}= user;
+          const playload={role: "user",providerAccountId,provider,user_email, image,name};
+          console.log("from sigin callback",playload);
+
+          const userCollection= dbConnect("students")
+          const isUserExist = await userCollection.findOne({providerAccountId});
+
+          if(!isUserExist){
+            await userCollection.insertOne(playload)
+          }
+        }
+        catch(error){
+          console.log(error);
+          return false;
+        }
+      }
+
+    return true
+  },
+
   async session({ session, token, user }) {
     if(token){
       session.user.username=token.username;
