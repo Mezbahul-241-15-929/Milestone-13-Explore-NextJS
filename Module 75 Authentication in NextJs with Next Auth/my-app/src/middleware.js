@@ -8,7 +8,8 @@ export const middleware= async (req)=>{
     const isAdminSpecificRote= req.nextUrl.pathname.startsWith("/addstudent");
 
     if(isAdminSpecificRote && !isAdminUser){
-        return NextResponse.redirect(new URL('http://localhost:3000/api/auth/signin',req.url));
+        const callbackUrl= encodeURIComponent(req.nextUrl.pathname);
+        return NextResponse.redirect(new URL(`http://localhost:3000/api/auth/signin?callbackUrl=${callbackUrl}`,req.url));
     }
 
     return NextResponse.next();

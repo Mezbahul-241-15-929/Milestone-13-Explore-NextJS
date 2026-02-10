@@ -1,5 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import CredentialsProvider from "next-auth/providers/credentials"
+import GoogleProvider from "next-auth/providers/google";
+
 
 export const authOptions={
   providers: [
@@ -51,6 +53,12 @@ export const authOptions={
     //   // Return null if user data could not be retrieved
     //   return null
     }
+  })
+],
+providers: [
+  GoogleProvider({
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET
   })
 ],
 callbacks: {
