@@ -12,9 +12,15 @@ const Navbar = () => {
           color: "white",
         }}
       >
+        
         <li>
           <Link href="/" style={{ color: "white", textDecoration: "none" }}>
             Home
+          </Link>
+        </li>
+        <li>
+          <Link href="/addstudent" style={{ color: "white", textDecoration: "none" }}>
+            Add Student
           </Link>
         </li>
         <li>
