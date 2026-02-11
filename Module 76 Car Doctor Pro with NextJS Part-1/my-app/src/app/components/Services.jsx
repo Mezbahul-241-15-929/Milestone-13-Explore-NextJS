@@ -1,15 +1,20 @@
+import dbConnect from "@/lib/dbConnect";
 import Image from "next/image";
 import Link from "next/link";
 
-async function getServices() {
-    const res = await fetch("http://localhost:3000/services.json", {
-        cache: "no-store",
-    });
-    return res.json();
-}
-
+// async function getServices() {
+//     const res = await fetch("http://localhost:3000/services.json", {
+//         cache: "no-store",
+//     });
+//     return res.json();
+// }
+ 
 const Services = async () => {
-    const services = await getServices();
+    // const services = await getServices();
+    const serviceColletion= dbConnect("services");
+    const services=await serviceColletion.find({}).toArray();
+
+    
 
     return (
         <section className="container mx-auto px-4 py-16">
