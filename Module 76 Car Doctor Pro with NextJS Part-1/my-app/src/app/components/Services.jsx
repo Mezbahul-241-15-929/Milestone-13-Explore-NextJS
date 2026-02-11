@@ -1,4 +1,4 @@
-import dbConnect from "@/lib/dbConnect";
+import dbConnect, { colletionNameObj } from "@/lib/dbConnect";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -11,7 +11,7 @@ import Link from "next/link";
  
 const Services = async () => {
     // const services = await getServices();
-    const serviceColletion= dbConnect("services");
+    const serviceColletion= dbConnect(colletionNameObj.servicescoll);
     const services=await serviceColletion.find({}).toArray();
 
     
@@ -57,7 +57,7 @@ const Services = async () => {
                                 </p>
 
                                 <Link
-                                    href={`/services/${service.service_id}`}
+                                    href={`/services/${service._id}`}
                                     className="text-primary text-xl font-bold"
                                 >
                                     →
