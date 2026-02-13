@@ -1,6 +1,7 @@
 "use client"
 
 import { signupUser } from "@/app/actions/auth/signupUser";
+import SocialLogin from "@/app/login/components/SocialLogin";
 
 const { default: Link } = require("next/link")
 
@@ -65,11 +66,13 @@ const SignupForm = () => {
       </form>
       <div>
         <h6 className="my-12 text-center">or sign in with</h6>
+        <SocialLogin/>
         <h6 className="my-12 text-center">
           Already have account ?{" "}
           <Link className="text-primary font-semibold" href={"/login"}>
             Sign In
           </Link>
+          
         </h6>
       </div>
     </div>

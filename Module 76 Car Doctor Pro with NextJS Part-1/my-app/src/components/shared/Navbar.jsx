@@ -47,6 +47,7 @@ const Navbar = () => {
           </Link>
           {
             status == "authenticated" ? (<>
+            <img src={session?.user?.image} alt=""  height={40} width={40}/>
               <li onClick={() => signOut()} className="btn btn-primary">
                 Logout
               </li>
