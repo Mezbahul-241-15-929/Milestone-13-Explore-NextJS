@@ -3,29 +3,23 @@
 import bcrypt from "bcrypt";
 import dbConnect, { colletionNameObj } from "@/lib/dbConnect";
 
-export const signupUser = async (payload) => {
+export const signupUser = async (playload) => {
     const userCollection = dbConnect(colletionNameObj.userColletion);
-    const { email, password } = payload;
+    const { email, password } = playload;
 
     if (!email || !password) {
-        return { success: false };
+        return null;
     }
 
-    const existingUser = await userCollection.findOne({ email });
+    const user = await userCollection.findOne({ email: playload.email });
 
-    if (existingUser) {
-        return { success: false, message: "User already exists" };
+    if (!user) {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        playload.password=hashedPassword;
+        const result = await userCollection.insertOne(playload);
+
+        result.insertedId = result.insertedId.toString();
+        return result;
     }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const result = await userCollection.insertOne({
-        ...payload,
-        password: hashedPassword
-    });
-
-    return {
-        acknowledged: result.acknowledged,
-        insertedId: result.insertedId
-    };
+   
 };
