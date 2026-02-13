@@ -2,21 +2,39 @@
 
 import { signupUser } from "@/app/actions/auth/signupUser";
 import { useSession, signIn, signOut } from "next-auth/react"
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const { default: Link } = require("next/link")
 
 const LoginForm = (e) => {
+    const router = useRouter();
     const handleSignin = async (e) => {
         e.preventDefault();
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
+        console.log({ email, password })
         try {
-            await signIn("credentials", { email, password ,callbackUrl:"/"});
+            const response = await signIn("credentials", {
+                email,
+                password,
+                callbackUrl: "/",
+                redirect: false,
+            });
+            if (response.ok) {
+                router.push("/");
+                form.reset();
+                toast.success("Logied In successfully");
+
+            }
+            else {
+                toast.error("Authentication Failed");
+
+            }
         }
-        catch(error){
-            console.log(error);
-            alert("failed")
+        catch (error) {
+            toast.error("Authentication Failed");
         }
         // const resp = await fetch("https://car-doctor-pro-nine.vercel.app/signup/api", {
         //   method: "POST",

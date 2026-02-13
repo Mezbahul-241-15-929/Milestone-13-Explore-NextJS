@@ -12,7 +12,6 @@ export const authOptions = {
             },
             async authorize(credentials) {
                 const user = await loginUser(credentials);
-                console.log("wrong");
 
                 if (!user) return null;
 
