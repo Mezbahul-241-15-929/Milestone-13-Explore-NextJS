@@ -1,18 +1,23 @@
 "use client"
 
 import { signupUser } from "@/app/actions/auth/signupUser";
+import { useSession, signIn, signOut } from "next-auth/react"
 
 const { default: Link } = require("next/link")
 
-const LoginForm = () => {
-    const handleSignin = async (event) => {
-        event.preventDefault();
-        const newUser = {
-            email: event.target.email.value,
-            password: event.target.password.value,
-        };
-        console.log(newUser);
-        signupUser(newUser);
+const LoginForm = (e) => {
+    const handleSignin = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        try {
+            await signIn("credentials", { email, password ,callbackUrl:"/"});
+        }
+        catch(error){
+            console.log(error);
+            alert("failed")
+        }
         // const resp = await fetch("https://car-doctor-pro-nine.vercel.app/signup/api", {
         //   method: "POST",
         //   body: JSON.stringify(newUser),

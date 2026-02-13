@@ -1,21 +1,31 @@
-"use server"
-import bcrypt from "bcrypt"
+"use server";
+
+import bcrypt from "bcrypt";
 import dbConnect, { colletionNameObj } from "@/lib/dbConnect";
 
-export const signupUser = async (playload) => {
-    console.log(playload);
-    const userColletion = dbConnect(colletionNameObj.userColletion);
-    const { email, password } = playload;
-    if (!email || !password) return { success: false };
-    const user = await userColletion.findOne({ email: playload.email });
-    if (!user) {
-        const hashedPassword = await bcrypt.hash(password,10);
-        playload.password= hashedPassword;
-        const result = await userColletion.insertOne(playload);
-        // console.log("add scuccesfully");
-        const {acknowledged, insertedId}= result;
-        return { acknowledged,insertedId };
+export const signupUser = async (payload) => {
+    const userCollection = dbConnect(colletionNameObj.userColletion);
+    const { email, password } = payload;
 
+    if (!email || !password) {
+        return { success: false };
     }
-    return { success: false };
-}
+
+    const existingUser = await userCollection.findOne({ email });
+
+    if (existingUser) {
+        return { success: false, message: "User already exists" };
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const result = await userCollection.insertOne({
+        ...payload,
+        password: hashedPassword
+    });
+
+    return {
+        acknowledged: result.acknowledged,
+        insertedId: result.insertedId
+    };
+};
