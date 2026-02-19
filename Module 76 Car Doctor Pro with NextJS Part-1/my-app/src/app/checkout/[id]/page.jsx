@@ -12,7 +12,7 @@ const page = async ({ params }) => {
             {
                 JSON.stringify(data)
             } */}
-            <CheckoutForm/>
+            <CheckoutForm data={data} />
         </div>
     );
 };
