@@ -79,7 +79,7 @@ export default function MyBookingsPage() {
                                 <td>{item.address}</td>
                                 <td>${item.service_price}</td>
                                 <td>
-                                    <Link href={`http://localhost:3000/my-bookings/${item._id}`}><button className="btn btn-sm btn-primary">
+                                    <Link href={`https://doctor-car-roan.vercel.app/my-bookings/${item._id}`}><button className="btn btn-sm btn-primary">
                                         Edit
                                     </button></Link>
                                 </td>

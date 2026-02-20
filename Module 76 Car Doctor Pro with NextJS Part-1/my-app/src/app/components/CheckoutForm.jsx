@@ -5,10 +5,12 @@
 "use client"
 
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 
 export default function CheckoutForm({ data }) {
   const { data: session } = useSession();
+  const router= useRouter();
   //   const [formData, setFormData] = useState({
   //     name: "",
   //     email: "",
@@ -28,7 +30,8 @@ export default function CheckoutForm({ data }) {
   //   };
   const handleBookService = async (e) => {
     e.preventDefault();
-
+        
+    
     const form = e.target;
     const name = form.name.value;
     const phone = form.phone.value;
@@ -48,12 +51,13 @@ export default function CheckoutForm({ data }) {
     }
     console.log(bookingPaload);
 
-    const res= await fetch("http://localhost:3000/api/service",{
+    const res= await fetch("https://doctor-car-roan.vercel.app/api/service",{
       method: "POST",
       body: JSON.stringify(bookingPaload),
     });
     const postedResponse = await res.json();
     console.log(postedResponse);
+    router.push("/my-bookings");
 
   }
 

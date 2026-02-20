@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 // async function getServices() {
-//     const res = await fetch("http://localhost:3000/services.json", {
+//     const res = await fetch("https://doctor-car-roan.vercel.app/services.json", {
 //         cache: "no-store",
 //     });
 //     return res.json();

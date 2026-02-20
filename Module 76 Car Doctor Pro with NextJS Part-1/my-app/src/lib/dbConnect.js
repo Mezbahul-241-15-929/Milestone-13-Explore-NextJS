@@ -6,7 +6,7 @@ export const colletionNameObj={
     bookingCollection: "booking"
 }
 
-const uri = process.env.MONGODB_URI;
+const uri = process.env.NEXT_PUBLIC_MONGODB_URI;
 
 function dbConnect(collectionName) {
 

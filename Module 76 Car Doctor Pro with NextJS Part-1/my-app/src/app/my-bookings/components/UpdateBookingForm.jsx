@@ -27,7 +27,7 @@ export default function UpdateBookingForm({ data }) {
         }
         console.log(bookingPaload);
 
-        const res = await fetch(`http://localhost:3000/api/my-bookings/${data._id}`, {
+        const res = await fetch(`https://doctor-car-roan.vercel.app/api/my-bookings/${data._id}`, {
             method: "PATCH",
             body: JSON.stringify(bookingPaload),
         });
