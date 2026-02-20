@@ -5,9 +5,11 @@
 "use client"
 
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 
 export default function UpdateBookingForm({ data }) {
+    const router= useRouter();
     const { data: session } = useSession();
     console.log(session)
     console.log("Data", data)
@@ -15,30 +17,23 @@ export default function UpdateBookingForm({ data }) {
         e.preventDefault();
 
         const form = e.target;
-        const name = form.name.value;
         const phone = form.phone.value;
         const date = form.date.value;
-        const email = form.email.value;
         const address = form.address.value;
         const bookingPaload = {
-            customerName: name,
-            email,
             date,
             phone,
             address,
-            service_id: data._id,
-            service_name: data.title,
-            service_img: data.img,
-            service_price: data.price,
         }
         console.log(bookingPaload);
 
-        const res = await fetch("http://localhost:3000/api/service", {
-            method: "POST",
+        const res = await fetch(`http://localhost:3000/api/my-bookings/${data._id}`, {
+            method: "PATCH",
             body: JSON.stringify(bookingPaload),
         });
         const postedResponse = await res.json();
-        console.log(postedResponse);
+        router.push("/my-bookings");
+        console.log(postedResponse);;
 
     }
 

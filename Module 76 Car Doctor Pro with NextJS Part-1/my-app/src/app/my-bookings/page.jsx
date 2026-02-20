@@ -52,6 +52,8 @@ export default function MyBookingsPage() {
                             <th>Image</th>
                             <th>Service Name</th>
                             <th>Date</th>
+                            <th>Phone</th>
+                            <th>Address</th>
                             <th>Price</th>
                             <th>Edit</th>
                             <th>Delete</th>
@@ -73,6 +75,8 @@ export default function MyBookingsPage() {
                                 </td>
                                 <td>{item.service_name}</td>
                                 <td>{item.date}</td>
+                                <td>{item.phone}</td>
+                                <td>{item.address}</td>
                                 <td>${item.service_price}</td>
                                 <td>
                                     <Link href={`http://localhost:3000/my-bookings/${item._id}`}><button className="btn btn-sm btn-primary">
