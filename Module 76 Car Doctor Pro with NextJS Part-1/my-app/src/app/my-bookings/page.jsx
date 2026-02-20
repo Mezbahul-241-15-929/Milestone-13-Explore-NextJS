@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function MyBookingsPage() {
     const [data, setData] = useState([]);
@@ -74,9 +75,9 @@ export default function MyBookingsPage() {
                                 <td>{item.date}</td>
                                 <td>${item.service_price}</td>
                                 <td>
-                                    <button className="btn btn-sm btn-primary">
+                                    <Link href={`http://localhost:3000/my-bookings/${item._id}`}><button className="btn btn-sm btn-primary">
                                         Edit
-                                    </button>
+                                    </button></Link>
                                 </td>
                                 <td>
                                     <button
